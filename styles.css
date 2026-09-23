@@ -287,3 +287,15 @@
     .lightbox-prev,.lightbox-next{padding:8px 12px; font-size:16px;}
     .lightbox-close{padding:8px 12px;}
   }
+
+  .hero-links a, .foot-cta a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .hero-links svg, .foot-cta svg{
+    width:16px;
+    height:16px;
+    fill:currentColor;
+    flex-shrink:0;
+  }
