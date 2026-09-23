@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gallery — Victoria Uzoechi-Adeniran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="topstrip">
+  <div class="mark">V. UZOECHI-ADENIRAN</div>
+  <nav>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#awards">Awards</a>
+    <a href="index.html#experience">Experience</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</div>
+
+<header class="wrap gallery-page-head">
+  <a class="back" href="index.html">&larr; Back to portfolio</a>
+  <p class="eyebrow">Gallery</p>
+  <h1 style="font-family:var(--font-display); font-weight:400; font-size:clamp(40px,7vw,72px); margin:0 0 14px; color:var(--ink);">On set &amp; in frame</h1>
+  <p class="lede" style="margin-bottom:20px;">Every photo, professional and on location.</p>
+</header>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="gallery-grid full" id="full-gallery-grid"></div>
+    <p class="gallery-empty" id="gallery-empty" style="display:none;">More photos coming soon.</p>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="foot-inner">
+    <div class="foot-top">
+      <h2>Let's work<br>together.</h2>
+      <div class="foot-cta">
+        <a href="mailto:Victoria_uzoechi@yahoo.com">Victoria_uzoechi@yahoo.com</a>
+        <a href="tel:+2347064958870">+234 706 495 8870</a>
+        <a href="https://www.instagram.com/victoriauzey" target="_blank" rel="noopener">@victoriauzey on Instagram</a>
+        <a href="https://www.linkedin.com/in/victoria-uzoechi-5a5214102/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>Victoria Uzoechi-Adeniran &middot; Lagos, Nigeria</span>
+      <span>Portrait photography by SH Media</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox-overlay" id="lightbox">
+  <button class="lightbox-close" id="lb-close" aria-label="Close">&#10005;</button>
+  <button class="lightbox-nav lightbox-prev" id="lb-prev" aria-label="Previous photo">&#8592;</button>
+  <img id="lb-img" src="" alt="Enlarged photo">
+  <button class="lightbox-nav lightbox-next" id="lb-next" aria-label="Next photo">&#8594;</button>
+  <div class="lightbox-count" id="lb-count"></div>
+</div>
+
+<script src="gallery-data.js"></script>
+<script>
+(function(){
+  var images = window.GALLERY_IMAGES || [];
+  var grid = document.getElementById('full-gallery-grid');
+  var emptyMsg = document.getElementById('gallery-empty');
+
+  if (!images.length) {
+    emptyMsg.style.display = 'block';
+    return;
+  }
+
+  images.forEach(function(src, idx){
+    var fig = document.createElement('figure');
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Victoria on set, photo ' + (idx + 1);
+    img.loading = 'lazy';
+    img.addEventListener('click', function(){ openLightbox(idx); });
+    fig.appendChild(img);
+    grid.appendChild(fig);
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img');
+  var lbCount = document.getElementById('lb-count');
+  var current = 0;
+
+  function openLightbox(idx){
+    current = idx;
+    render();
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+  }
+  function render(){
+    lbImg.src = images[current];
+    lbCount.textContent = (current + 1) + ' / ' + images.length;
+  }
+  function next(){ current = (current + 1) % images.length; render(); }
+  function prev(){ current = (current - 1 + images.length) % images.length; render(); }
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-next').addEventListener('click', next);
+  document.getElementById('lb-prev').addEventListener('click', prev);
+  lightbox.addEventListener('click', function(e){
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+})();
+</script>
+</body>
+</html>
